@@ -328,14 +328,14 @@ public class MappingEngineImpl implements MappingEngine {
     return converter;
   }
 
-  private <T> T instantiate(Class<T> type, Errors errors) {
+  private <T> T instantiate(Class<T> type, String destinationPath, Errors errors) {
     try {
       Constructor<T> constructor = type.getDeclaredConstructor();
       if (!constructor.isAccessible())
         constructor.setAccessible(true);
       return constructor.newInstance();
     } catch (Exception e) {
-      errors.errorInstantiatingDestination(type, e);
+      errors.errorInstantiatingDestination(type, destinationPath, e);
       return null;
     }
   }
@@ -345,7 +345,7 @@ public class MappingEngineImpl implements MappingEngine {
     MappingContextImpl<S, D> contextImpl = (MappingContextImpl<S, D>) context;
     D destination = contextImpl.createDestinationViaProvider();
     if (destination == null)
-      destination = instantiate(context.getDestinationType(), contextImpl.errors);
+      destination = instantiate(context.getDestinationType(), contextImpl.getDestinationPath(), contextImpl.errors);
 
     contextImpl.setDestination(destination, true);
     return destination;
@@ -356,7 +356,7 @@ public class MappingEngineImpl implements MappingEngine {
   }
 
   @SuppressWarnings("unchecked")
-  <S, D> D createDestinationViaGlobalProvider(S source, Class<D> requestedType,
+  <S, D> D createDestinationViaGlobalProvider(S source, Class<D> requestedType, String destinationPath,
       Errors errors) {
     D destination = null;
     Provider<D> provider = (Provider<D>) configuration.getProvider();
@@ -365,7 +365,7 @@ public class MappingEngineImpl implements MappingEngine {
       validateDestination(requestedType, destination, errors);
     }
     if (destination == null)
-      destination = instantiate(requestedType, errors);
+      destination = instantiate(requestedType, destinationPath, errors);
 
     return destination;
   }

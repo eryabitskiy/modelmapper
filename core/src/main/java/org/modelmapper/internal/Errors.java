@@ -172,11 +172,12 @@ public final class Errors {
     return addMessage(t, "Failed to get value from %s", member);
   }
 
-  public Errors errorInstantiatingDestination(Class<?> type, Throwable t) {
+  public Errors errorInstantiatingDestination(Class<?> type, String destinationPath, Throwable t) {
+    String destinationInfo = destinationPath.isEmpty() ? "" : " Destination path: " + destinationPath;
     return addMessage(
         t,
-        "Failed to instantiate instance of destination %s. Ensure that %s has a non-private no-argument constructor.",
-        type, type);
+        "Failed to instantiate instance of destination %s. Ensure that %s has a non-private no-argument constructor.%s",
+        type, type, destinationInfo);
   }
 
   public Errors errorMapping(Object source, Class<?> destinationType, String destinationPath) {
