@@ -179,12 +179,14 @@ public final class Errors {
         type, type);
   }
 
-  public Errors errorMapping(Object source, Class<?> destinationType) {
-    return addMessage("Error mapping %s to %s", source, Types.toString(destinationType));
+  public Errors errorMapping(Object source, Class<?> destinationType, String destinationPath) {
+    String destinationInfo = destinationPath.isEmpty() ? "" : ", destination path: " + destinationPath;
+    return addMessage("Error mapping %s%s", source, Types.toString(destinationType), destinationInfo);
   }
 
-  public Errors errorMapping(Object source, Type destinationType, Throwable t) {
-    return addMessage(t, "Error mapping %s to %s", source, Types.toString(destinationType));
+  public Errors errorMapping(Object source, Type destinationType, String destinationPath, Throwable t) {
+    String destinationInfo = destinationPath.isEmpty() ? "" : ", destination path: " + destinationPath;
+    return addMessage(t, "Error mapping %s to %s%s", source, Types.toString(destinationType), destinationInfo);
   }
 
   public Errors errorSettingValue(Member member, Object value, Throwable t) {

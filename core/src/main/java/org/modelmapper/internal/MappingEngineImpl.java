@@ -75,7 +75,7 @@ public class MappingEngineImpl implements MappingEngine {
     } catch (ErrorsException e) {
       throw context.errors.toMappingException();
     } catch (Throwable t) {
-      context.errors.errorMapping(sourceType, destinationTypeToken.getType(), t);
+      context.errors.errorMapping(sourceType, destinationTypeToken.getType(), context.getDestinationPath(), t);
     }
 
     context.errors.throwMappingExceptionIfErrorsExist();

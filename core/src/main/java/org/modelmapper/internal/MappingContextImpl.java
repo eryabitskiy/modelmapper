@@ -185,6 +185,11 @@ public class MappingContextImpl<S, D> implements MappingContext<S, D>, Provision
   }
 
   @Override
+  public String getDestinationPath() {
+    return destinationPath;
+  }
+
+  @Override
   public Mapping getMapping() {
     return mapping;
   }
