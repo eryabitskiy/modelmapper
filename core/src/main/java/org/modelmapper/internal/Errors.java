@@ -190,8 +190,9 @@ public final class Errors {
     return addMessage(t, "Error mapping %s to %s%s", source, Types.toString(destinationType), destinationInfo);
   }
 
-  public Errors errorSettingValue(Member member, Object value, Throwable t) {
-    return addMessage(t, "Failed to set value '%s' on %s", value, member);
+  public Errors errorSettingValue(Member member, Object value, String destinationPath, Throwable t) {
+    String destinationInfo = destinationPath.isEmpty() ? "" : ", destination path: " + destinationPath;
+    return addMessage(t, "Failed to set value '%s' on %s%s", value, member, destinationInfo);
   }
 
   public Errors errorTooLarge(Object source, Class<?> destinationType) {

@@ -321,7 +321,7 @@ public class MappingContextImpl<S, D> implements MappingContext<S, D>, Provision
         next = mappingEngine.createDestinationViaGlobalProvider(parent.parentSource, mutator.getType(), destPath, parent.errors);
 
       if (next != null) {
-        mutator.setValue(current, next);
+        mutator.setValue(current, next, destPath);
         parent.destinationCache.put(destPath, next);
       }
       current = next;
